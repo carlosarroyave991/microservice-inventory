@@ -8,10 +8,7 @@ import com.arka.microservice.inventory.infraestructure.driver.rest.mapper.IWareh
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -29,7 +26,7 @@ public class WarehouseAddressController {
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<WarehouseResponseDto> createWarehouse(WarehouseRequestDto request){
+    public Mono<WarehouseResponseDto> createWarehouse(@RequestBody WarehouseRequestDto request){
         WarehouseAddressModel model = mapper.toModel(request);
         return service.createWarehouse(model)
                 .map(mapper::toResponse);

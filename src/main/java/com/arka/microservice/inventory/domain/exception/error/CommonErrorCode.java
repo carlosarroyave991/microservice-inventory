@@ -33,6 +33,7 @@ public enum CommonErrorCode  implements ErrorCode{
     USER_NAME_NOT_FOUND("ERR_USER_NAME_NOT_FOUND", "No matches were found.", HttpStatus.NOT_FOUND.value(), ErrorCategory.RESOURCE),
     EMAIL_ALREADY_EXISTS("ERR_EMAIL_EXISTS", "Email already registered", HttpStatus.CONFLICT.value(), ErrorCategory.RESOURCE),
     DB_EMPTY("ERR_DB_EMPTY", "No data found in the database.", HttpStatus.NOT_FOUND.value(), ErrorCategory.RESOURCE),
+    WEBCLIENT("ERR_WEBCLIENT", "Error performing operation on external microservice.", HttpStatus.CONFLICT.value(), ErrorCategory.RESOURCE),
 
     // Authentication errors
     UNAUTHORIZED("ERR_UNAUTHORIZED", "Unauthorized access", HttpStatus.UNAUTHORIZED.value(), ErrorCategory.AUTHENTICATION),

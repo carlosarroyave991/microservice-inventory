@@ -16,7 +16,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/api/Supply")
+@RequestMapping("/api/supply")
 @RequiredArgsConstructor
 @Tag(name = "Supply Controller", description = "Endpoint para la gestion del abastecimiento")
 public class SupplyController {
