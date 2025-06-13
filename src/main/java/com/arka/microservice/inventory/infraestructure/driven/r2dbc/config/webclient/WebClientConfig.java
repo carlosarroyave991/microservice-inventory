@@ -14,22 +14,20 @@ public class WebClientConfig {
 
     @Value("${products.service.url}")
     private String productServiceUrl;
+    
+    private final SendTokenWebClient sendTokenWebClient;
+    
+    public WebClientConfig(SendTokenWebClient sendTokenWebClient) {
+        this.sendTokenWebClient = sendTokenWebClient;
+    }
 
     @Bean
     public WebClient productWebClient(WebClient.Builder builder) {
         return builder
                 .baseUrl(productServiceUrl)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .filter(logRequest())
+                //.filter(logRequest())
+                .filter(sendTokenWebClient.authHeaderFilter())
                 .build();
-    }
-    
-    private ExchangeFilterFunction logRequest() {
-        return ExchangeFilterFunction.ofRequestProcessor(clientRequest -> {
-            System.out.println("Request: " + clientRequest.method() + " " + clientRequest.url());
-            clientRequest.headers().forEach((name, values) -> 
-                values.forEach(value -> System.out.println(name + ": " + value)));
-            return Mono.just(clientRequest);
-        });
     }
 }
