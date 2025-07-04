@@ -34,7 +34,7 @@ public class SupplyUseCaseImpl implements ISupplyPortUseCase {
     public Mono<Void> deleteSupplyById(Long id) {
         return service.findById(id)
                 .switchIfEmpty(Mono.error(new DuplicateResourceException(ID_NOT_FOUND)))
-                .then(service.deleteById(id));
+                .flatMap(supply -> service.deleteById(supply.getId()));
     }
 
     /**
@@ -68,7 +68,7 @@ public class SupplyUseCaseImpl implements ISupplyPortUseCase {
                     if (supplyModel.getSupplyDate() != null) existing.setSupplyDate(supplyModel.getSupplyDate());
 
                     // Guardar los cambios en la base de datos
-                    return service.save(existing)
+                    return service.update(existing)
                             .flatMap(savedSupply -> {
                                 // Solo actualizar el stock si la cantidad ha cambiado
                                 if (supplyModel.getQuantity() != null && !supplyModel.getQuantity().equals(oldQuantity)) {

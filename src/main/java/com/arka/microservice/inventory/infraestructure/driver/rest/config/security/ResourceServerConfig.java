@@ -15,6 +15,7 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 @AllArgsConstructor
 @EnableReactiveMethodSecurity
 public class ResourceServerConfig {
+    private static final String[] WHITE_LIST_OPENAPI = {"/swagger", "/swagger/**", "/api-docs", "/api-docs/**", "/webjars/**"};
 
     @Bean
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http,
@@ -24,6 +25,7 @@ public class ResourceServerConfig {
         return http
                 .csrf(csrf -> csrf.disable())
                 .authorizeExchange(exchange -> exchange
+                        .pathMatchers(WHITE_LIST_OPENAPI).permitAll()
                         // Endpoints GET para productos: accesibles a roles "client" y "admin"
                         .pathMatchers(HttpMethod.GET, "/api/storage", "/api/storage/{id}","/api/supply","/api/supply/{id}")
                         .hasAnyRole("client", "admin")

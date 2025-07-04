@@ -82,6 +82,6 @@ public class StorageUseCaseImpl implements IStoragePortUseCase {
     public Mono<Void> deleteStorage(Long storageId) {
         return service.findById(storageId)
                 .switchIfEmpty(Mono.error(new DuplicateResourceException(ID_NOT_FOUND)))
-                .then(service.deleteById(storageId));
+                .flatMap(storage -> service.deleteById(storage.getId()));
     }
 }
