@@ -6,6 +6,7 @@ import com.arka.microservice.inventory.domain.ports.out.WarehouseAddressPersiste
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 /**
@@ -21,6 +22,7 @@ public class WarehouseUseCaseImpl implements IWarehouseAddressPortUseCase {
      * @param model objeto con los parametros necesarios para la creacion
      * @return retorna un mono o un mono error
      */
+    @Transactional
     @Override
     public Mono<WarehouseAddressModel> createWarehouse(WarehouseAddressModel model) {
         return service.save(model);

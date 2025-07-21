@@ -9,6 +9,7 @@ import com.arka.microservice.inventory.domain.service.PhoneValidationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -37,6 +38,7 @@ public class StorageUseCaseImpl implements IStoragePortUseCase {
      * @param model objeto con los parametros
      * @return retorna un mono o un mono vacio en caso de error
      */
+    @Transactional
     @Override
     public Mono<StorageModel> createStorage(StorageModel model) {
         if (!phoneValidationService.isValidPhone(model.getPhone())){

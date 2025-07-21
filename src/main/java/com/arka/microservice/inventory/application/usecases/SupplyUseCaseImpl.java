@@ -8,6 +8,7 @@ import com.arka.microservice.inventory.domain.ports.in.ISupplyPortUseCase;
 import com.arka.microservice.inventory.domain.ports.out.SupplyPersistencePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -119,6 +120,7 @@ public class SupplyUseCaseImpl implements ISupplyPortUseCase {
      * @param supplyModel objeto con los parametros
      * @return retorna un mono o un mono vacio en caso de error
      */
+    @Transactional
     @Override
     public Mono<SupplyModel> createSupply(SupplyModel supplyModel) {
         supplyModel.setSupplyDate(LocalDate.now());
